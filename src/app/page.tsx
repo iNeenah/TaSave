@@ -1,116 +1,157 @@
 import Link from "next/link";
 import { getCurrentUser } from "@/lib/auth";
+import Button from "@/components/ui/Button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
+import Container from "@/components/ui/Container";
 
 export default async function HomePage() {
   const user = await getCurrentUser();
 
   return (
-    <div className="bg-white">
-      <div className="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
-        <div className="text-center">
-          <h1 className="text-4xl font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
-            <span className="block">Welcome to</span>
-            <span className="block text-indigo-600">DockerLabs</span>
-          </h1>
-          <p className="mt-3 max-w-md mx-auto text-base text-gray-500 sm:text-lg md:mt-5 md:text-xl md:max-w-3xl">
-            Practice cybersecurity with Docker machines. Learn, explore, and
-            master various security challenges in a safe environment.
-          </p>
-          <div className="mt-5 max-w-md mx-auto sm:flex sm:justify-center md:mt-8">
-            {user ? (
-              <div className="rounded-md shadow">
-                <Link
-                  href="/dashboard"
-                  className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10"
-                >
-                  Go to Dashboard
-                </Link>
-              </div>
-            ) : (
-              <div className="rounded-md shadow">
-                <Link
-                  href="/signup"
-                  className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10"
-                >
-                  Get started
-                </Link>
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-
-      <div className="py-16 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="bg-black min-h-screen text-green-500">
+      {/* Hero Section */}
+      <section className="py-20 lg:py-32">
+        <Container>
           <div className="text-center">
-            <h2 className="text-3xl font-extrabold text-gray-900">Features</h2>
-            <p className="mt-4 text-lg text-gray-600">
+            <div className="mb-8">
+              <h1 className="text-5xl lg:text-7xl font-bold mb-4">
+                <span className="block text-green-500 terminal-text">
+                  &gt; TaSave_
+                </span>
+              </h1>
+              <div className="text-lg lg:text-xl text-gray-400 mb-2">
+                <span className="text-green-500">root@tasave:~$</span> initializing cybersecurity_lab...
+              </div>
+              <div className="text-lg lg:text-xl text-gray-400">
+                <span className="text-green-500">[OK]</span> Docker machines loaded successfully
+              </div>
+            </div>
+            
+            <p className="mt-6 max-w-3xl mx-auto text-lg lg:text-xl text-gray-400 leading-relaxed">
+              Practice cybersecurity with Docker machines. Learn, explore, and
+              master various security challenges in a <span className="text-green-500">safe environment</span>.
+            </p>
+            
+            <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
+              {user ? (
+                <Link href="/dashboard">
+                  <Button size="lg" className="w-full sm:w-auto">
+                    &gt; Access Dashboard
+                  </Button>
+                </Link>
+              ) : (
+                <>
+                  <Link href="/signup">
+                    <Button size="lg" className="w-full sm:w-auto">
+                      &gt; Initialize Session
+                    </Button>
+                  </Link>
+                  <Link href="/signin">
+                    <Button variant="outline" size="lg" className="w-full sm:w-auto">
+                      &gt; Login
+                    </Button>
+                  </Link>
+                </>
+              )}
+            </div>
+          </div>
+        </Container>
+      </section>
+
+      {/* Features Section */}
+      <section className="py-20 bg-gray-950">
+        <Container>
+          <div className="text-center mb-16">
+            <h2 className="text-3xl lg:text-4xl font-bold text-green-500 mb-4">
+              &gt; System Features
+            </h2>
+            <p className="text-lg text-gray-400">
               Everything you need to practice cybersecurity
             </p>
           </div>
 
-          <div className="mt-12">
-            <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-              <div className="pt-6">
-                <div className="flow-root bg-white rounded-lg px-6 pb-8">
-                  <div className="-mt-6">
-                    <div>
-                      <span className="inline-flex items-center justify-center p-3 bg-indigo-500 rounded-md shadow-lg">
-                        <span className="text-2xl">🐳</span>
-                      </span>
-                    </div>
-                    <h3 className="mt-8 text-lg font-medium text-gray-900 tracking-tight">
-                      Docker Machines
-                    </h3>
-                    <p className="mt-5 text-base text-gray-500">
-                      Access a wide variety of Docker-based cybersecurity
-                      challenges with different difficulty levels.
-                    </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <Card>
+              <CardHeader>
+                <div className="mb-4">
+                  <div className="w-12 h-12 bg-green-500 rounded-lg flex items-center justify-center text-black text-2xl font-bold">
+                    🐳
                   </div>
                 </div>
-              </div>
+                <CardTitle>Docker Machines</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-400 text-sm leading-relaxed">
+                  Access a wide variety of Docker-based cybersecurity
+                  challenges with different difficulty levels and scenarios.
+                </p>
+              </CardContent>
+            </Card>
 
-              <div className="pt-6">
-                <div className="flow-root bg-white rounded-lg px-6 pb-8">
-                  <div className="-mt-6">
-                    <div>
-                      <span className="inline-flex items-center justify-center p-3 bg-indigo-500 rounded-md shadow-lg">
-                        <span className="text-2xl">⭐</span>
-                      </span>
-                    </div>
-                    <h3 className="mt-8 text-lg font-medium text-gray-900 tracking-tight">
-                      Reviews & Ratings
-                    </h3>
-                    <p className="mt-5 text-base text-gray-500">
-                      Read reviews from other users and share your own
-                      experiences with different machines.
-                    </p>
+            <Card>
+              <CardHeader>
+                <div className="mb-4">
+                  <div className="w-12 h-12 bg-green-500 rounded-lg flex items-center justify-center text-black text-2xl font-bold">
+                    ⭐
                   </div>
                 </div>
-              </div>
+                <CardTitle>Reviews &amp; Ratings</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-400 text-sm leading-relaxed">
+                  Read reviews from other hackers and share your own
+                  experiences with different machines and challenges.
+                </p>
+              </CardContent>
+            </Card>
 
-              <div className="pt-6">
-                <div className="flow-root bg-white rounded-lg px-6 pb-8">
-                  <div className="-mt-6">
-                    <div>
-                      <span className="inline-flex items-center justify-center p-3 bg-indigo-500 rounded-md shadow-lg">
-                        <span className="text-2xl">📝</span>
-                      </span>
-                    </div>
-                    <h3 className="mt-8 text-lg font-medium text-gray-900 tracking-tight">
-                      Personal Lists
-                    </h3>
-                    <p className="mt-5 text-base text-gray-500">
-                      Save machines to your favorites and create todo lists to
-                      track your learning progress.
-                    </p>
+            <Card>
+              <CardHeader>
+                <div className="mb-4">
+                  <div className="w-12 h-12 bg-green-500 rounded-lg flex items-center justify-center text-black text-2xl font-bold">
+                    📝
                   </div>
                 </div>
+                <CardTitle>Personal Lists</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-400 text-sm leading-relaxed">
+                  Save machines to your favorites and create todo lists to
+                  track your learning progress and achievements.
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+        </Container>
+      </section>
+
+      {/* Terminal Section */}
+      <section className="py-20">
+        <Container>
+          <div className="bg-gray-900 border border-gray-700 rounded-lg p-8">
+            <div className="flex items-center mb-4">
+              <div className="flex space-x-2">
+                <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+                <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                <div className="w-3 h-3 bg-green-500 rounded-full"></div>
               </div>
+              <div className="ml-4 text-gray-400 text-sm">terminal</div>
+            </div>
+            <div className="space-y-2 text-sm font-mono">
+              <div><span className="text-green-500">user@tasave:~$</span> <span className="text-white">ls -la /cybersecurity/challenges</span></div>
+              <div className="text-gray-400">total 42</div>
+              <div className="text-gray-400">drwxr-xr-x 8 root root 4096 Dec 21 2024 .</div>
+              <div className="text-gray-400">drwxr-xr-x 3 root root 4096 Dec 21 2024 ..</div>
+              <div className="text-green-500">-rwxr-xr-x 1 root root 2048 Dec 21 2024 web_exploitation</div>
+              <div className="text-green-500">-rwxr-xr-x 1 root root 1024 Dec 21 2024 privilege_escalation</div>
+              <div className="text-green-500">-rwxr-xr-x 1 root root 3072 Dec 21 2024 network_analysis</div>
+              <div><span className="text-green-500">user@tasave:~$</span> <span className="text-white">./start_challenge.sh</span></div>
+              <div className="text-green-500">[+] Challenge environment initialized</div>
+              <div className="text-green-500">[+] Ready to hack!</div>
             </div>
           </div>
-        </div>
-      </div>
+        </Container>
+      </section>
     </div>
   );
 }
