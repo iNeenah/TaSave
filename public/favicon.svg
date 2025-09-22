@@ -1,0 +1,21 @@
+<svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <rect width="32" height="32" fill="#000000"/>
+  <g transform="translate(16, 16)">
+    <!-- Simplified palm tree trunk -->
+    <path d="M-1.5 8 L-1 3 L-0.5 -2 L0 -8 L0.5 -2 L1 3 L1.5 8 Z" fill="none" stroke="#00ff41" stroke-width="0.8"/>
+    
+    <!-- Top fronds -->
+    <path d="M0 -8 Q-3 -10 -6 -9 Q-4 -8.5 -2 -8 Q-1 -8 0 -8" fill="none" stroke="#00ff41" stroke-width="0.6"/>
+    <path d="M0 -8 Q3 -10 6 -9 Q4 -8.5 2 -8 Q1 -8 0 -8" fill="none" stroke="#00ff41" stroke-width="0.6"/>
+    
+    <!-- Side fronds -->
+    <path d="M0 -8 Q-4 -6 -7 -3 Q-5 -4 -2 -6 Q-1 -7 0 -8" fill="none" stroke="#00ff41" stroke-width="0.6"/>
+    <path d="M0 -8 Q4 -6 7 -3 Q5 -4 2 -6 Q1 -7 0 -8" fill="none" stroke="#00ff41" stroke-width="0.6"/>
+    
+    <!-- Connection points -->
+    <circle cx="-6" cy="-9" r="0.4" fill="#00ff41"/>
+    <circle cx="6" cy="-9" r="0.4" fill="#00ff41"/>
+    <circle cx="-7" cy="-3" r="0.4" fill="#00ff41"/>
+    <circle cx="7" cy="-3" r="0.4" fill="#00ff41"/>
+  </g>
+</svg>

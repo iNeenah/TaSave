@@ -3,6 +3,7 @@ import { getCurrentUser } from "@/lib/auth";
 import Button from "@/components/ui/Button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import Container from "@/components/ui/Container";
+import BackgroundVideo from "@/components/ui/BackgroundVideo";
 
 export default async function HomePage() {
   const user = await getCurrentUser();
@@ -10,8 +11,9 @@ export default async function HomePage() {
   return (
     <div className="bg-black min-h-screen text-green-500">
       {/* Hero Section */}
-      <section className="py-20 lg:py-32">
-        <Container>
+      <section className="py-20 lg:py-32 relative overflow-hidden">
+        <BackgroundVideo src="/videos/matrix-bg.mp4" opacity={0.08} />
+        <Container className="relative z-10">
           <div className="text-center">
             <div className="mb-8">
               <h1 className="text-5xl lg:text-7xl font-bold mb-4">
@@ -59,8 +61,13 @@ export default async function HomePage() {
       </section>
 
       {/* Features Section */}
-      <section className="py-20 bg-gray-950">
-        <Container>
+      <section className="py-20 bg-gray-950 relative overflow-hidden">
+        {/* Subtle animated background */}
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute inset-0 bg-gradient-to-r from-green-500/10 via-transparent to-green-500/10 animate-pulse" />
+          <div className="particles" />
+        </div>
+        <Container className="relative z-10">
           <div className="text-center mb-16">
             <h2 className="text-3xl lg:text-4xl font-bold text-green-500 mb-4">
               &gt; System Features
@@ -126,9 +133,10 @@ export default async function HomePage() {
       </section>
 
       {/* Terminal Section */}
-      <section className="py-20">
-        <Container>
-          <div className="bg-gray-900 border border-gray-700 rounded-lg p-8">
+      <section className="py-20 relative overflow-hidden">
+        <BackgroundVideo src="/videos/terminal-bg.mp4" opacity={0.05} overlay={false} />
+        <Container className="relative z-10">
+          <div className="bg-gray-900/90 backdrop-blur-sm border border-gray-700 rounded-lg p-8 shadow-2xl">
             <div className="flex items-center mb-4">
               <div className="flex space-x-2">
                 <div className="w-3 h-3 bg-red-500 rounded-full"></div>

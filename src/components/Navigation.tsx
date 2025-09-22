@@ -1,7 +1,7 @@
 import Link from "next/link";
-import { signout } from "@/lib/actions/auth";
 import { getCurrentUser } from "@/lib/auth";
 import Button from "./ui/Button";
+import SignoutButton from "./SignoutButton";
 
 export default async function Navigation() {
   const user = await getCurrentUser();
@@ -44,11 +44,7 @@ export default async function Navigation() {
                 <span className="text-sm text-green-500">
                   Welcome, <span className="text-green-400">{user.username}</span>
                 </span>
-                <form action={signout}>
-                  <Button type="submit" variant="outline" size="sm">
-                    Sign out
-                  </Button>
-                </form>
+                <SignoutButton />
               </>
             ) : (
               <>
