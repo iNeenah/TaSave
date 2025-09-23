@@ -34,11 +34,17 @@ export default async function DashboardPage() {
     .orderBy(machines.createdAt);
 
   return (
-    <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen dashboard-background">
+      {/* Dashboard Background Overlay */}
+      <div className="dashboard-overlay" />
+      
+      <div className="relative z-10 max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
-        <p className="mt-2 text-gray-600">
-          Welcome back, {user.username}! Explore cybersecurity machines below.
+        <h1 className="text-3xl font-bold text-green-500 font-mono">
+          &gt; Dashboard
+        </h1>
+        <p className="mt-2 text-green-400 font-mono">
+          Welcome back, <span className="text-green-300">{user.username}</span>! Explore cybersecurity machines below.
         </p>
       </div>
 
@@ -46,10 +52,10 @@ export default async function DashboardPage() {
         <div className="text-center py-12">
           <div className="text-gray-500">
             <span className="text-6xl">🐳</span>
-            <h3 className="mt-4 text-lg font-medium text-gray-900">
+            <h3 className="mt-4 text-lg font-medium text-green-500 font-mono">
               No machines available
             </h3>
-            <p className="mt-2 text-gray-500">
+            <p className="mt-2 text-green-400 font-mono">
               Check back later for new cybersecurity challenges.
             </p>
           </div>
@@ -76,6 +82,7 @@ export default async function DashboardPage() {
           )}
         </div>
       )}
+      </div>
     </div>
   );
 }

@@ -3,7 +3,8 @@ import { db, machines, favorites, todos, reviews, users } from "@/db";
 import { eq, sql } from "drizzle-orm";
 import { getCurrentUser } from "@/lib/auth";
 import MachineCard from "@/components/MachineCard";
-import ReviewForm from "@/components/ReviewForm";
+import MachineFeatures from "@/components/MachineFeatures";
+import ReviewsGrid from "@/components/ReviewsGrid";
 import Link from "next/link";
 
 interface MachineDetailPageProps {
@@ -79,189 +80,60 @@ export default async function MachineDetailPage({
   const stats = reviewStats[0];
 
   return (
-    <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-      <div className="mb-6">
-        <Link
-          href="/dashboard"
-          className="text-indigo-600 hover:text-indigo-500 text-sm font-medium"
-        >
-          ← Back to Dashboard
-        </Link>
-      </div>
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black">
+      <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+        <div className="mb-8">
+          <Link
+            href="/dashboard"
+            className="inline-flex items-center text-green-400 hover:text-green-300 text-sm font-medium font-mono transition-colors"
+          >
+            <span className="mr-2">←</span>
+            Back to Dashboard
+          </Link>
+        </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Machine Info */}
-        <div className="lg:col-span-2">
-          <div className="bg-white rounded-lg shadow-md overflow-hidden">
-            <div className="p-6">
-              <div className="flex items-start justify-between mb-4">
-                <h1 className="text-3xl font-bold text-gray-900">
-                  {machine.name}
-                </h1>
-                <span
-                  className={`px-3 py-1 text-sm font-medium rounded-full ${
-                    machine.difficulty === "very_easy"
-                      ? "bg-green-100 text-green-800"
-                      : machine.difficulty === "easy"
-                      ? "bg-blue-100 text-blue-800"
-                      : machine.difficulty === "medium"
-                      ? "bg-yellow-100 text-yellow-800"
-                      : "bg-red-100 text-red-800"
-                  }`}
-                >
-                  {machine.difficulty === "very_easy"
-                    ? "Very Easy"
-                    : machine.difficulty === "easy"
-                    ? "Easy"
-                    : machine.difficulty === "medium"
-                    ? "Medium"
-                    : "Hard"}
-                </span>
-              </div>
-
-              {machine.description && (
-                <p className="text-gray-600 mb-6">{machine.description}</p>
-              )}
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-                {machine.author && (
-                  <div>
-                    <dt className="text-sm font-medium text-gray-500">
-                      Author
-                    </dt>
-                    <dd className="text-sm text-gray-900">{machine.author}</dd>
-                  </div>
-                )}
-                {machine.creationDate && (
-                  <div>
-                    <dt className="text-sm font-medium text-gray-500">
-                      Created
-                    </dt>
-                    <dd className="text-sm text-gray-900">
-                      {machine.creationDate}
-                    </dd>
-                  </div>
-                )}
-              </div>
-
-              {machine.downloadLink && (
-                <div className="mb-6">
-                  <a
-                    href={machine.downloadLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
-                  >
-                    Download Machine
-                  </a>
-                </div>
-              )}
-
-              {/* Review Statistics */}
-              {stats && stats.count > 0 && (
-                <div className="border-t pt-6">
-                  <h3 className="text-lg font-medium text-gray-900 mb-4">
-                    Reviews
-                  </h3>
-                  <div className="flex items-center space-x-4">
-                    <div className="flex items-center">
-                      <span className="text-yellow-400 text-xl">★</span>
-                      <span className="ml-1 text-sm text-gray-600">
-                        {Number(stats.average || 0).toFixed(1)} ({stats.count}{" "}
-                        reviews)
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-
-          {/* Reviews List */}
-          {machineReviews.length > 0 && (
-            <div className="mt-8 bg-white rounded-lg shadow-md p-6">
-              <h3 className="text-lg font-medium text-gray-900 mb-4">
-                All Reviews
-              </h3>
-              <div className="space-y-4">
-                {machineReviews.map(({ review, user }) => (
-                  <div
-                    key={review.id}
-                    className="border-b border-gray-200 pb-4 last:border-b-0"
-                  >
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="font-medium text-gray-900">
-                        {user.username}
-                      </span>
-                      <div className="flex items-center">
-                        {[...Array(5)].map((_, i) => (
-                          <span
-                            key={i}
-                            className={`text-sm ${
-                              i < review.rating
-                                ? "text-yellow-400"
-                                : "text-gray-300"
-                            }`}
-                          >
-                            ★
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                    {review.text && (
-                      <p className="text-gray-600 text-sm">{review.text}</p>
-                    )}
-                    <p className="text-xs text-gray-500 mt-2">
-                      {new Date(review.createdAt).toLocaleDateString()}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
+        {/* Machine Title */}
+        <div className="mb-8">
+          <h1 className="text-4xl font-bold text-white mb-4">
+            {machine.name}
+          </h1>
+          {machine.description && (
+            <p className="text-gray-300 text-lg max-w-3xl">
+              {machine.description}
+            </p>
           )}
         </div>
 
-        {/* Sidebar */}
-        <div className="space-y-6">
-          {/* Machine Card for Actions */}
-          <MachineCard
-            machine={machine}
-            isFavorited={userFavorite}
-            isInTodo={userTodo}
-            userReviewCount={stats?.count || 0}
-            averageRating={stats?.average || 0}
-          />
+        <div className="space-y-8">
+          {/* Machine Features Section */}
+          <div>
+            <h2 className="text-2xl font-semibold text-white mb-6">Machine Overview</h2>
+            <MachineFeatures machine={machine} />
+          </div>
 
-          {/* Review Form */}
-          {user && (
-            <div className="bg-white rounded-lg shadow-md p-6">
-              <h3 className="text-lg font-medium text-gray-900 mb-4">
-                {userReview ? "Update Your Review" : "Leave a Review"}
-              </h3>
-              <ReviewForm
-                machineId={machineId}
-                existingReview={
-                  userReview
-                    ? { rating: userReview.rating, text: userReview.text }
-                    : undefined
-                }
-              />
-            </div>
-          )}
+          {/* Reviews Section */}
+          <div>
+            <h2 className="text-2xl font-semibold text-white mb-6">Reviews & Community</h2>
+            <ReviewsGrid
+              machineId={machineId}
+              reviews={machineReviews}
+              user={user}
+              userReview={userReview ? { rating: userReview.rating, text: userReview.text } : null}
+              reviewStats={stats}
+            />
+          </div>
 
-          {!user && (
-            <div className="bg-white rounded-lg shadow-md p-6 text-center">
-              <p className="text-gray-600 mb-4">
-                Sign in to leave reviews and manage your lists
-              </p>
-              <Link
-                href="/signin"
-                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
-              >
-                Sign In
-              </Link>
-            </div>
-          )}
+          {/* Sidebar Actions - Now at bottom on mobile, side on desktop */}
+          <div className="lg:hidden">
+            <h2 className="text-2xl font-semibold text-white mb-6">Quick Actions</h2>
+            <MachineCard
+              machine={machine}
+              isFavorited={userFavorite}
+              isInTodo={userTodo}
+              userReviewCount={stats?.count || 0}
+              averageRating={stats?.average || 0}
+            />
+          </div>
         </div>
       </div>
     </div>

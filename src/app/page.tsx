@@ -3,13 +3,14 @@ import { getCurrentUser } from "@/lib/auth";
 import Button from "@/components/ui/Button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import Container from "@/components/ui/Container";
-import BackgroundVideo from "@/components/ui/BackgroundVideo";
+
 import InteractiveTooltip from "@/components/ui/InteractiveTooltip";
 import AnimatedPage from "@/components/AnimatedPage";
 import Preloader from "@/components/Preloader";
 import SmoothScrolling from "@/components/SmoothScrolling";
 import ScrambleTitle from "@/components/ui/ScrambleTitle";
 import TerminalTypewriter from "@/components/ui/TerminalTypewriter";
+
 
 export default async function HomePage() {
   const user = await getCurrentUser();
@@ -22,7 +23,6 @@ export default async function HomePage() {
         <div className="bg-black min-h-screen text-green-500">
       {/* Hero Section */}
       <section className="py-20 lg:py-32 relative overflow-hidden">
-        <BackgroundVideo src="/videos/matrix-bg.mp4" opacity={0.08} />
         <Container className="relative z-10">
           <div className="text-center">
             <div className="mb-8">
@@ -168,7 +168,6 @@ export default async function HomePage() {
 
       {/* Terminal Section */}
       <section className="py-20 relative overflow-hidden">
-        <BackgroundVideo src="/videos/terminal-bg.mp4" opacity={0.05} overlay={false} />
         <Container className="relative z-10">
           <TerminalTypewriter />
         </Container>

@@ -72,6 +72,24 @@ body {
   100% { transform: translate(-50px, -50px) rotate(360deg); }
 }
 
+/* Enhanced preloader styling */
+.preloader {
+  background: radial-gradient(circle at center, #001100 0%, #000000 100%);
+}
+
+.preloader-title {
+  text-shadow: 
+    0 0 10px #00ff41,
+    0 0 20px #00ff41,
+    0 0 30px #00ff41;
+}
+
+.progress-bar {
+  box-shadow: 
+    0 0 10px #00ff41,
+    inset 0 0 10px rgba(0, 255, 65, 0.2);
+}
+
 /* Matrix rain effect for preloader */
 .matrix-rain {
   position: absolute;
@@ -190,6 +208,74 @@ body {
   text-shadow: 0 0 3px rgba(0, 255, 65, 0.3);
 }
 
+/* Dashboard Background with ASCII Girl GIF */
+.dashboard-background {
+  background-image: url('/images/2.gif');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  position: relative;
+}
+
+/* Dashboard Overlay for Legibility */
+.dashboard-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 1;
+}
+
+/* Atmospheric Video Container */
+.atmospheric-video-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: -10;
+}
+
+/* Video Performance Optimizations */
+video {
+  will-change: transform;
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Preloader Video Styling */
+.preloader video {
+  max-width: 90vw;
+  max-height: 90vh;
+  filter: contrast(1.2) brightness(1.1) saturate(1.1);
+}
+
+/* Mobile Optimizations */
+@media (max-width: 768px) {
+  .dashboard-background {
+    background-attachment: scroll; /* Fixed attachment can cause issues on mobile */
+  }
+  
+  .atmospheric-video-container video {
+    filter: blur(3px); /* Less blur on mobile for performance */
+  }
+}
+
+/* Ensure content is above background elements */
+.content-layer {
+  position: relative;
+  z-index: 10;
+}
+
+/* Smooth transitions for multimedia elements */
+.multimedia-transition {
+  transition: opacity 0.5s ease-in-out, filter 0.3s ease;
+}
+
 /* Ensure cursor visibility */
 .animate-pulse {
   animation: pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite;
@@ -288,4 +374,155 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
   background: #00cc33;
+}/* Custo
+m scrollbar for reviews grid */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(0, 255, 65, 0.6);
+  border-radius: 3px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 255, 65, 0.8);
+}
+
+/* Glassmorphism enhancements */
+.glass-card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.glass-card:hover {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.08) 100%);
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 
+    0 12px 40px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+/* Enhanced button animations */
+.btn-glow {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-glow::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.btn-glow:hover::before {
+  left: 100%;
+}
+
+/* Difficulty badge animations */
+.difficulty-badge {
+  position: relative;
+  overflow: hidden;
+}
+
+.difficulty-badge::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
+  transform: translateX(-100%);
+  transition: transform 0.6s;
+}
+
+.difficulty-badge:hover::after {
+  transform: translateX(100%);
+}
+
+/* Review card hover effects */
+.review-card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.review-card:hover {
+  transform: translateY(-4px) scale(1.02);
+}
+
+/* Star rating animations */
+.star-rating {
+  transition: all 0.2s ease;
+}
+
+.star-rating:hover {
+  transform: scale(1.1);
+  filter: drop-shadow(0 0 8px currentColor);
+}
+
+/* Loading animations */
+@keyframes shimmer-loading {
+  0% {
+    background-position: -200px 0;
+  }
+  100% {
+    background-position: calc(200px + 100%) 0;
+  }
+}
+
+.loading-shimmer {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200px 100%;
+  animation: shimmer-loading 1.5s infinite;
+}
+
+/* Dark theme loading shimmer */
+.loading-shimmer-dark {
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.05) 25%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0.05) 75%);
+  background-size: 200px 100%;
+  animation: shimmer-loading 1.5s infinite;
+}
+
+/* Responsive grid improvements */
+@media (max-width: 1024px) {
+  .reviews-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+
+/* Enhanced focus states for accessibility */
+.focus-ring:focus {
+  outline: 2px solid #00ff41;
+  outline-offset: 2px;
+}
+
+/* Smooth page transitions */
+.page-transition {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
