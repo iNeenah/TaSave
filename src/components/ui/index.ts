@@ -6,4 +6,3 @@ export { default as ScrambleTitle } from './ScrambleTitle';
 export { default as InteractiveTooltip } from './InteractiveTooltip';
 export { default as TerminalTypewriter } from './TerminalTypewriter';
 export { default as AtmosphericVideo } from './AtmosphericVideo';
-export { default as MediaSection } from './MediaSection';

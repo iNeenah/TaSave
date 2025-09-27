@@ -18,13 +18,6 @@ export default function MachineCard({
   userReviewCount = 0,
   averageRating = 0,
 }: MachineCardProps) {
-  const difficultyColors = {
-    very_easy: "bg-green-100 text-green-800",
-    easy: "bg-blue-100 text-blue-800",
-    medium: "bg-yellow-100 text-yellow-800",
-    hard: "bg-red-100 text-red-800",
-  };
-
   const difficultyLabels = {
     very_easy: "Very Easy",
     easy: "Easy",

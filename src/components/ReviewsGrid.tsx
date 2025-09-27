@@ -18,7 +18,10 @@ interface ReviewsGridProps {
     review: Review;
     user: ReviewUser;
   }>;
-  user?: any;
+  user?: {
+    id: number;
+    username: string;
+  } | null;
   userReview?: {
     rating: number;
     text?: string | null;
@@ -116,7 +119,7 @@ export default function ReviewsGrid({
                   {/* Review Text */}
                   {review.text && (
                     <blockquote className="text-gray-300 text-sm mb-4 italic border-l-2 border-green-500/30 pl-4">
-                      "{review.text}"
+                      &ldquo;{review.text}&rdquo;
                     </blockquote>
                   )}
 

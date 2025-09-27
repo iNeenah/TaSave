@@ -235,7 +235,9 @@ export default function AnimatedPage({ children, enablePageTransition = true }: 
         if (url.origin === window.location.origin) {
           e.preventDefault();
           
-          if ('startViewTransition' in document) {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          if ('startViewTransition' in document && typeof (document as any).startViewTransition === 'function') {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             (document as any).startViewTransition(() => {
               window.location.href = target.href;
             });

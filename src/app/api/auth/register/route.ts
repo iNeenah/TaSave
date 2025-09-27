@@ -55,7 +55,7 @@ export async function POST(request: NextRequest) {
     await setAuthCookie(token);
 
     // Return user data without password
-    const { password: _, ...userWithoutPassword } = newUser;
+    const { password: _password, ...userWithoutPassword } = newUser;
 
     return NextResponse.json({
       message: "Registration successful",

@@ -49,7 +49,9 @@ export default function ClientNavigation() {
       setUser(null);
       
       // Usar Page Transition API si está disponible
-      if ('startViewTransition' in document) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      if ('startViewTransition' in document && typeof (document as any).startViewTransition === 'function') {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (document as any).startViewTransition(() => {
           router.push('/');
         });
@@ -64,7 +66,9 @@ export default function ClientNavigation() {
   };
 
   const handleNavigation = (href: string) => {
-    if ('startViewTransition' in document) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    if ('startViewTransition' in document && typeof (document as any).startViewTransition === 'function') {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (document as any).startViewTransition(() => {
         router.push(href);
       });
