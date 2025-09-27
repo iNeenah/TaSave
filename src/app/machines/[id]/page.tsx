@@ -80,7 +80,7 @@ export default async function MachineDetailPage({
   const stats = reviewStats[0];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black page-transition">
       <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
         <div className="mb-8">
           <Link
@@ -106,13 +106,13 @@ export default async function MachineDetailPage({
 
         <div className="space-y-8">
           {/* Machine Features Section */}
-          <div>
+          <div className="machine-features">
             <h2 className="text-2xl font-semibold text-white mb-6">Machine Overview</h2>
             <MachineFeatures machine={machine} />
           </div>
 
           {/* Reviews Section */}
-          <div>
+          <div className="reviews-grid">
             <h2 className="text-2xl font-semibold text-white mb-6">Reviews & Community</h2>
             <ReviewsGrid
               machineId={machineId}
