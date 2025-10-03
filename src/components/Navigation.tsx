@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { getCurrentUser } from "@/lib/auth";
-import Button from "./ui/Button";
+import { HackerButton, GlitchText, Badge } from "./ui";
 import SignoutButton from "./SignoutButton";
 import ClientNavigation from "./ClientNavigation";
+import { Terminal, Shield, Heart, CheckSquare } from "lucide-react";
 
 export default async function Navigation() {
   const user = await getCurrentUser();
@@ -12,32 +13,44 @@ export default async function Navigation() {
   return (
     <>
       {/* Server-side navigation for initial render */}
-      <nav className="bg-black border-b border-gray-700 shadow-lg">
+      <nav className="bg-black border-b border-[#00ff41]/30 shadow-2xl backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16">
             <div className="flex items-center">
-              <Link href="/" className="text-2xl font-bold text-green-500 terminal-text">
-                TaSave
+              <Link href="/" className="text-2xl font-bold">
+                <GlitchText 
+                  trigger="hover" 
+                  intensity="medium"
+                  className="text-[#00ff41] terminal-text"
+                >
+                  TaSave
+                </GlitchText>
               </Link>
               {user && (
-                <div className="ml-10 flex items-baseline space-x-4">
-                  <Link
-                    href="/dashboard"
-                    className="nav-link text-green-500 hover:text-green-400 px-3 py-2 rounded-md text-sm font-medium transition-colors hover:bg-gray-800"
-                  >
-                    Dashboard
+                <div className="ml-10 flex items-baseline space-x-2">
+                  <Link href="/dashboard">
+                    <HackerButton variant="ghost" size="sm">
+                      <Terminal className="w-4 h-4 mr-2" />
+                      Dashboard
+                    </HackerButton>
                   </Link>
-                  <Link
-                    href="/favorites"
-                    className="nav-link text-green-500 hover:text-green-400 px-3 py-2 rounded-md text-sm font-medium transition-colors hover:bg-gray-800"
-                  >
-                    Favorites
+                  <Link href="/favorites">
+                    <HackerButton variant="ghost" size="sm">
+                      <Heart className="w-4 h-4 mr-2" />
+                      Favorites
+                    </HackerButton>
                   </Link>
-                  <Link
-                    href="/todos"
-                    className="nav-link text-green-500 hover:text-green-400 px-3 py-2 rounded-md text-sm font-medium transition-colors hover:bg-gray-800"
-                  >
-                    Todo List
+                  <Link href="/todos">
+                    <HackerButton variant="ghost" size="sm">
+                      <CheckSquare className="w-4 h-4 mr-2" />
+                      Todo List
+                    </HackerButton>
+                  </Link>
+                  <Link href="/showcase">
+                    <HackerButton variant="matrix" size="sm">
+                      <Shield className="w-4 h-4 mr-2" />
+                      UI Showcase
+                    </HackerButton>
                   </Link>
                 </div>
               )}
@@ -46,22 +59,25 @@ export default async function Navigation() {
             <div className="flex items-center space-x-4">
               {user ? (
                 <>
-                  <span className="text-sm text-green-500">
-                    Welcome, <span className="text-green-400">{user.username}</span>
-                  </span>
+                  <div className="flex items-center space-x-2">
+                    <Badge variant="success">Online</Badge>
+                    <span className="text-sm text-[#00ff41]">
+                      Welcome, <GlitchText trigger="hover" className="text-[#00ff41]">{user.username}</GlitchText>
+                    </span>
+                  </div>
                   <SignoutButton />
                 </>
               ) : (
                 <>
                   <Link href="/auth?mode=signin">
-                    <Button variant="ghost" size="sm">
+                    <HackerButton variant="outline" size="sm">
                       Sign in
-                    </Button>
+                    </HackerButton>
                   </Link>
                   <Link href="/auth?mode=signup">
-                    <Button variant="primary" size="sm">
+                    <HackerButton variant="default" size="sm">
                       Sign up
-                    </Button>
+                    </HackerButton>
                   </Link>
                 </>
               )}

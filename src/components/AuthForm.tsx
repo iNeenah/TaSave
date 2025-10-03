@@ -2,7 +2,8 @@
 
 import { useState, useTransition, useEffect } from "react";
 import { signin, signup } from "@/lib/actions/auth";
-import Button from "./ui/Button";
+import { HackerButton, GlowCard, Badge, GlitchText } from "./ui";
+import { Terminal, Shield, AlertTriangle } from "lucide-react";
 
 interface AuthFormProps {
   mode: "signin" | "signup";
@@ -87,25 +88,37 @@ export default function AuthForm({ mode, onModeChange }: AuthFormProps) {
   const isSignin = mode === "signin";
 
   return (
-    <div className="max-w-md w-full space-y-8 relative z-10">
+    <GlowCard className="max-w-md w-full space-y-8 relative z-10">
       <div className="text-center">
-        <h2 className="mt-6 text-3xl font-extrabold text-green-500 terminal-text">
-          {isSignin ? "&gt; Access Terminal" : "&gt; Initialize Session"}
+        <div className="flex items-center justify-center mb-4">
+          {isSignin ? (
+            <Terminal className="w-12 h-12 text-[#00ff41]" />
+          ) : (
+            <Shield className="w-12 h-12 text-[#00ff41]" />
+          )}
+        </div>
+        <h2 className="text-3xl font-extrabold text-[#00ff41] terminal-text mb-2">
+          <GlitchText trigger="hover" intensity="low">
+            {isSignin ? "Access Terminal" : "Initialize Session"}
+          </GlitchText>
         </h2>
-        <p className="mt-2 text-sm text-gray-400">
+        <p className="text-sm text-gray-400">
           {isSignin ? "Enter your credentials to access the system" : "Create a new account to get started"}
         </p>
+        <div className="flex justify-center mt-2">
+          <Badge variant={isSignin ? "info" : "success"}>
+            {isSignin ? "LOGIN MODE" : "REGISTER MODE"}
+          </Badge>
+        </div>
       </div>
 
       {errors && (
-        <div className="bg-red-900/20 border border-red-500/50 rounded-lg p-4">
-          <div className="flex">
-            <svg className="w-5 h-5 text-red-400 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
+        <GlowCard glowColor="#ff6b6b" intensity="medium" className="bg-red-900/20 border-red-500/50">
+          <div className="flex items-center">
+            <AlertTriangle className="w-5 h-5 text-red-400 mr-3 flex-shrink-0" />
             <p className="text-red-400 text-sm">{errors}</p>
           </div>
-        </div>
+        </GlowCard>
       )}
 
       <form onSubmit={handleSubmit} className="mt-8 space-y-6">
@@ -145,52 +158,67 @@ export default function AuthForm({ mode, onModeChange }: AuthFormProps) {
         </div>
 
         <div>
-          <Button
+          <HackerButton
             type="submit"
+            variant={isSignin ? "matrix" : "default"}
             size="lg"
-            className="group relative w-full flex justify-center"
+            className="w-full"
             disabled={isPending}
+            glitchEffect={!isPending}
           >
             {isPending ? (
               <>
-                <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-black" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                   <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                 </svg>
-                {isSignin ? "Signing in..." : "Creating account..."}
+                {isSignin ? "Accessing..." : "Initializing..."}
               </>
             ) : (
-              isSignin ? "&gt; Sign in" : "&gt; Create Account"
+              <>
+                {isSignin ? (
+                  <Terminal className="w-4 h-4 mr-2" />
+                ) : (
+                  <Shield className="w-4 h-4 mr-2" />
+                )}
+                {isSignin ? "Access System" : "Create Account"}
+              </>
             )}
-          </Button>
+          </HackerButton>
         </div>
 
         {onModeChange && (
           <div className="text-center">
-            <button
-              type="button"
+            <HackerButton
+              variant="ghost"
               onClick={() => onModeChange(isSignin ? "signup" : "signin")}
-              className="text-sm text-gray-400 hover:text-green-400 transition-colors duration-200"
               disabled={isPending}
+              className="text-sm"
             >
               {isSignin 
-                ? "Don't have an account? Initialize new session" 
-                : "Already have an account? Access existing terminal"
+                ? "Initialize new session" 
+                : "Access existing terminal"
               }
-            </button>
+            </HackerButton>
           </div>
         )}
       </form>
 
       {/* Terminal-style info */}
-      <div className="mt-6 p-4 bg-gray-900/50 border border-gray-700 rounded-lg">
-        <div className="text-xs text-gray-500 font-mono">
-          <div className="text-green-400 mb-1">SYSTEM INFO:</div>
-          <div>• Username: min 3 characters</div>
-          <div>• Password: min 6 characters</div>
-          <div>• Session: 7 days validity</div>
+      <GlowCard intensity="low" className="bg-gray-900/30">
+        <div className="text-xs text-gray-400 font-mono">
+          <div className="text-[#00ff41] mb-2 flex items-center">
+            <Terminal className="w-3 h-3 mr-1" />
+            SYSTEM REQUIREMENTS:
+          </div>
+          <div className="space-y-1">
+            <div>• Username: minimum 3 characters</div>
+            <div>• Password: minimum 6 characters</div>
+            <div>• Session: 7 days validity</div>
+            <div className="text-yellow-400 mt-2">• Default admin: admin / admin123</div>
+          </div>
         </div>
-      </div>
-    </div>
+      </GlowCard>
+    </GlowCard>
   );
 }

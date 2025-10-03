@@ -1,3 +1,5 @@
+"use client";
+
 // No imports needed for SVG icons
 
 interface StarRatingProps {
