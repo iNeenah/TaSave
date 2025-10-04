@@ -68,7 +68,7 @@ export default function GlitchText({
 
       return () => clearInterval(autoGlitch)
     }
-  }, [trigger])
+  }, [trigger, glitchEffect])
 
   const handleInteraction = () => {
     if (trigger === 'hover' || trigger === 'click') {

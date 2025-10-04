@@ -185,7 +185,7 @@ export default async function HomePage() {
                     </div>
                     <div className="flex">
                       <span className="text-[#00ff41] mr-2">$</span>
-                      <span>echo "Welcome to TaSave - Your Cybersecurity Playground"</span>
+                      <span>echo &quot;Welcome to TaSave - Your Cybersecurity Playground&quot;</span>
                     </div>
                     <div className="text-[#00ff41] font-bold">
                       Welcome to TaSave - Your Cybersecurity Playground

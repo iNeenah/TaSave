@@ -13,7 +13,7 @@ export async function GET() {
     }
 
     // No devolver la contraseña
-    const { password: _, ...userWithoutPassword } = user;
+    const { password: _password, ...userWithoutPassword } = user;
     
     return NextResponse.json(userWithoutPassword);
   } catch (error) {
