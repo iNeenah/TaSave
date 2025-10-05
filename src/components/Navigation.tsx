@@ -3,7 +3,7 @@ import { getCurrentUser } from "@/lib/auth";
 import { HackerButton, GlitchText, Badge } from "./ui";
 import SignoutButton from "./SignoutButton";
 import ClientNavigation from "./ClientNavigation";
-import { Terminal, Shield, Heart, CheckSquare } from "lucide-react";
+import { Terminal, Shield, Heart, CheckSquare, Download } from "lucide-react";
 
 export default async function Navigation() {
   const user = await getCurrentUser();
@@ -32,6 +32,12 @@ export default async function Navigation() {
                     <HackerButton variant="ghost" size="sm">
                       <Terminal className="w-4 h-4 mr-2" />
                       Dashboard
+                    </HackerButton>
+                  </Link>
+                  <Link href="/auto-deploy">
+                    <HackerButton variant="ghost" size="sm">
+                      <Download className="w-4 h-4 mr-2" />
+                      Auto Deploy
                     </HackerButton>
                   </Link>
                   <Link href="/favorites">

@@ -16,3 +16,6 @@ export { default as MatrixRain } from './MatrixRain';
 export { default as GlitchText } from './GlitchText';
 export { default as HolographicCard } from './HolographicCard';
 export { default as CyberGrid } from './CyberGrid';
+export { ScrollFloat } from './ScrollFloat';
+export { default as LetterGlitch } from './LetterGlitch';
+export { default as LetterGlitchBackground } from './LetterGlitchBackground';
