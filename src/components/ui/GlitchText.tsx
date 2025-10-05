@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion"
 import { cn } from "@/lib/utils"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
 
 interface GlitchTextProps {
   children: string
@@ -30,7 +30,7 @@ export default function GlitchText({
 
   const config = intensityConfig[intensity]
 
-  const glitchEffect = () => {
+  const glitchEffect = useCallback(() => {
     if (isGlitching) return
     
     setIsGlitching(true)
@@ -56,7 +56,7 @@ export default function GlitchText({
         setIsGlitching(false)
       }
     }, config.duration / config.iterations)
-  }
+  }, [isGlitching, children, config.iterations, config.duration])
 
   useEffect(() => {
     if (trigger === 'auto' && typeof window !== 'undefined') {

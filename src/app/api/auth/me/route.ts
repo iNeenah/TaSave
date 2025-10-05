@@ -13,7 +13,9 @@ export async function GET() {
     }
 
     // No devolver la contraseña
-    const { password: _password, ...userWithoutPassword } = user;
+    const { password, ...userWithoutPassword } = user;
+    // Evitar warning de variable no utilizada
+    void password;
     
     return NextResponse.json(userWithoutPassword);
   } catch (error) {

@@ -174,7 +174,7 @@ export default function DashboardClient({ machinesWithData, username }: Dashboar
                 </div>
                 <div className="flex">
                   <span className="text-[#00ff41] mr-2">$</span>
-                  <span>echo "Keep exploring, hacker!"</span>
+                  <span>echo &quot;Keep exploring, hacker!&quot;</span>
                 </div>
               </div>
             </TerminalWindow>

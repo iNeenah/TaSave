@@ -1,4 +1,4 @@
-import { getCurrentUser } from "@/lib/auth";
+// getCurrentUser removed as it's not needed for this page
 import {
   GlowCard,
   HolographicCard,
@@ -22,7 +22,7 @@ import {
   Trash2
 } from "lucide-react";
 
-export default async function AutoDeployPage() {
+export default function AutoDeployPage() {
 
   return (
     <>
@@ -248,7 +248,7 @@ export default async function AutoDeployPage() {
                         Do you want to remove all Docker images?
                       </p>
                       <p className="text-sm text-gray-400">
-                        <span className="text-green-400">Yes:</span> If we don't mind losing other Docker images
+                        <span className="text-green-400">Yes:</span> If we don&apos;t mind losing other Docker images
                       </p>
                       <p className="text-sm text-gray-400">
                         <span className="text-red-400">No:</span> If we have images we want to keep
