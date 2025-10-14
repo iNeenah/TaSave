@@ -1,6 +1,5 @@
 "use server";
 
-import { redirect } from "next/navigation";
 import { db, users } from "@/db";
 import { eq } from "drizzle-orm";
 import {
@@ -10,7 +9,6 @@ import {
   setAuthCookie,
   clearAuthCookie,
 } from "@/lib/auth";
-import { handleFormError } from "@/lib/utils";
 
 export async function signup(formData: FormData) {
   try {
@@ -18,15 +16,15 @@ export async function signup(formData: FormData) {
     const password = formData.get("password") as string;
 
     if (!username || !password) {
-      throw new Error("Username and password are required");
+      return { success: false, error: "Username and password are required" };
     }
 
     if (username.length < 3) {
-      throw new Error("Username must be at least 3 characters long");
+      return { success: false, error: "Username must be at least 3 characters long" };
     }
 
     if (password.length < 6) {
-      throw new Error("Password must be at least 6 characters long");
+      return { success: false, error: "Password must be at least 6 characters long" };
     }
 
     // Check if user already exists
@@ -35,7 +33,7 @@ export async function signup(formData: FormData) {
     });
 
     if (existingUser) {
-      throw new Error("Username already exists");
+      return { success: false, error: "Username already exists" };
     }
 
     // Create new user
@@ -52,9 +50,10 @@ export async function signup(formData: FormData) {
     const token = await createToken(newUser.id);
     await setAuthCookie(token);
 
-    redirect("/dashboard");
+    return { success: true, message: "Account created successfully" };
   } catch (error) {
-    await handleFormError(error, "/signup");
+    console.error("Signup error:", error);
+    return { success: false, error: "An unexpected error occurred" };
   }
 }
 
@@ -64,7 +63,7 @@ export async function signin(formData: FormData) {
     const password = formData.get("password") as string;
 
     if (!username || !password) {
-      throw new Error("Username and password are required");
+      return { success: false, error: "Username and password are required" };
     }
 
     // Find user
@@ -73,30 +72,32 @@ export async function signin(formData: FormData) {
     });
 
     if (!user) {
-      throw new Error("Invalid username or password");
+      return { success: false, error: "Invalid username or password" };
     }
 
     // Verify password
     const isValidPassword = await verifyPassword(password, user.password);
     if (!isValidPassword) {
-      throw new Error("Invalid username or password");
+      return { success: false, error: "Invalid username or password" };
     }
 
     // Create token and set cookie
     const token = await createToken(user.id);
     await setAuthCookie(token);
 
-    redirect("/dashboard");
+    return { success: true, message: "Login successful" };
   } catch (error) {
-    await handleFormError(error, "/signin");
+    console.error("Signin error:", error);
+    return { success: false, error: "An unexpected error occurred" };
   }
 }
 
 export async function signout() {
   try {
     await clearAuthCookie();
-    redirect("/");
+    return { success: true, message: "Logged out successfully" };
   } catch (error) {
-    await handleFormError(error, "/");
+    console.error("Signout error:", error);
+    return { success: false, error: "Error logging out" };
   }
 }

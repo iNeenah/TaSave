@@ -525,4 +525,30 @@ m scrollbar for reviews grid */
     opacity: 1;
     transform: translateY(0);
   }
+}/* Notif
+ication animations */
+@keyframes slide-in-from-right-full {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.animate-in {
+  animation-duration: 0.3s;
+  animation-timing-function: ease-out;
+  animation-fill-mode: both;
+}
+
+.slide-in-from-right-full {
+  animation-name: slide-in-from-right-full;
+}
+
+/* Backdrop blur support */
+.backdrop-blur-sm {
+  backdrop-filter: blur(4px);
 }

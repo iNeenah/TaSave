@@ -2,10 +2,12 @@
 
 // CLIENT COMPONENT: "use client" indica que este componente se ejecuta en el navegador
 import { useState, useTransition, useEffect } from "react";
+import { useRouter } from "next/navigation";
 // SERVER ACTIONS: Funciones que se ejecutan en el servidor pero se pueden llamar desde el cliente
 import { signin, signup } from "@/lib/actions/auth";
 import { HackerButton, GlowCard, Badge, GlitchText } from "./ui";
 import { Terminal, Shield, AlertTriangle } from "lucide-react";
+import { useNotifications } from "@/contexts/NotificationContext";
 
 // TYPESCRIPT INTERFACE: Define la estructura de las props del componente
 interface AuthFormProps {
@@ -16,6 +18,8 @@ interface AuthFormProps {
 export default function AuthForm({ mode, onModeChange }: AuthFormProps) {
   // useTransition: Hook para manejar transiciones de estado sin bloquear la UI
   const [isPending, startTransition] = useTransition();
+  const router = useRouter();
+  const { success, error } = useNotifications();
 
   // useState: Hook fundamental para estado local del componente
   const [formData, setFormData] = useState({
@@ -60,17 +64,17 @@ export default function AuthForm({ mode, onModeChange }: AuthFormProps) {
 
     // Validaciones del lado del cliente (antes de enviar al servidor)
     if (!formData.username || !formData.password) {
-      setErrors("El nombre de usuario y la contraseña son obligatorios");
+      setErrors("Username and password are required");
       return;
     }
 
     if (formData.username.length < 3) {
-      setErrors("El nombre de usuario debe tener al menos 3 caracteres");
+      setErrors("Username must be at least 3 characters long");
       return;
     }
 
     if (formData.password.length < 6) {
-      setErrors("La contraseña debe tener al menos 6 caracteres");
+      setErrors("Password must be at least 6 characters long");
       return;
     }
 
@@ -83,21 +87,38 @@ export default function AuthForm({ mode, onModeChange }: AuthFormProps) {
       // CONCURRENT FEATURES: startTransition marca actualizaciones como no urgentes
       startTransition(async () => {
         try {
+          let result;
           if (mode === "signin") {
             // SERVER ACTION: Función que se ejecuta en el servidor
-            await signin(formDataObj);
-            // REDIRECT: Se maneja automáticamente en el servidor
+            result = await signin(formDataObj);
           } else {
-            await signup(formDataObj);
+            result = await signup(formDataObj);
           }
-        } catch (error) {
+
+          if (result.success) {
+            // Mostrar notificación de éxito
+            success("Success!", result.message);
+            // Limpiar formulario
+            setFormData({ username: "", password: "" });
+            // Redirigir al dashboard después de un breve delay
+            setTimeout(() => {
+              router.push("/dashboard");
+            }, 1000);
+          } else {
+            // Mostrar error usando notificaciones
+            error("Error", result.error || "Unknown error");
+            setErrors(result.error || "Unknown error");
+          }
+        } catch (err) {
           // TYPE NARROWING: Verificar tipo antes de acceder a propiedades
-          setErrors(error instanceof Error ? error.message : "Ocurrió un error");
+          const errorMessage = err instanceof Error ? err.message : "An unexpected error occurred";
+          error("Error", errorMessage);
+          setErrors(errorMessage);
         }
       });
     } catch (error) {
       // Capturamos cualquier error inesperado
-      setErrors(error instanceof Error ? error.message : "Ocurrió un error");
+      setErrors(error instanceof Error ? error.message : "An error occurred");
     }
   };
 
@@ -120,19 +141,19 @@ export default function AuthForm({ mode, onModeChange }: AuthFormProps) {
         {/* Título principal con efecto glitch */}
         <h2 className="text-3xl font-extrabold text-[#00ff41] terminal-text mb-2">
           <GlitchText trigger="hover" intensity="low">
-            {isSignin ? "Acceso Terminal" : "Inicializar Sesión"}
+            {isSignin ? "Terminal Access" : "Initialize Session"}
           </GlitchText>
         </h2>
 
         {/* Descripción del formulario */}
         <p className="text-sm text-gray-400">
-          {isSignin ? "Ingresa tus credenciales para acceder al sistema" : "Crea una nueva cuenta para comenzar"}
+          {isSignin ? "Enter your credentials to access the system" : "Create a new account to get started"}
         </p>
 
         {/* Badge que muestra el modo actual */}
         <div className="flex justify-center mt-2">
           <Badge variant={isSignin ? "info" : "success"}>
-            {isSignin ? "MODO LOGIN" : "MODO REGISTRO"}
+            {isSignin ? "LOGIN MODE" : "SIGNUP MODE"}
           </Badge>
         </div>
       </div>
@@ -154,7 +175,7 @@ export default function AuthForm({ mode, onModeChange }: AuthFormProps) {
           {/* Campo de nombre de usuario */}
           <div>
             <label htmlFor="username" className="sr-only">
-              Nombre de usuario
+              Username
             </label>
             <input
               id="username"
@@ -165,13 +186,13 @@ export default function AuthForm({ mode, onModeChange }: AuthFormProps) {
               value={formData.username}
               onChange={handleInputChange} // Se ejecuta cada vez que el usuario escribe
               className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-700 placeholder-gray-400 text-green-500 bg-gray-900 rounded-t-md focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm disabled:opacity-50 transition-all duration-200"
-              placeholder="Nombre de usuario"
+              placeholder="Username"
             />
           </div>
           {/* Campo de contraseña */}
           <div>
             <label htmlFor="password" className="sr-only">
-              Contraseña
+              Password
             </label>
             <input
               id="password"
@@ -182,7 +203,7 @@ export default function AuthForm({ mode, onModeChange }: AuthFormProps) {
               value={formData.password}
               onChange={handleInputChange} // Se ejecuta cada vez que el usuario escribe
               className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-700 placeholder-gray-400 text-green-500 bg-gray-900 rounded-b-md focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm disabled:opacity-50 transition-all duration-200"
-              placeholder="Contraseña"
+              placeholder="Password"
             />
           </div>
         </div>
@@ -204,7 +225,7 @@ export default function AuthForm({ mode, onModeChange }: AuthFormProps) {
                   <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                 </svg>
-                {isSignin ? "Accediendo..." : "Inicializando..."}
+                {isSignin ? "Accessing..." : "Initializing..."}
               </>
             ) : (
               // Contenido normal del botón
@@ -214,7 +235,7 @@ export default function AuthForm({ mode, onModeChange }: AuthFormProps) {
                 ) : (
                   <Shield className="w-4 h-4 mr-2" />
                 )}
-                {isSignin ? "Acceder al Sistema" : "Crear Cuenta"}
+                {isSignin ? "Access System" : "Create Account"}
               </>
             )}
           </HackerButton>
@@ -230,8 +251,8 @@ export default function AuthForm({ mode, onModeChange }: AuthFormProps) {
               className="text-sm"
             >
               {isSignin
-                ? "Inicializar nueva sesión"
-                : "Acceder a terminal existente"
+                ? "Initialize new session"
+                : "Access existing terminal"
               }
             </HackerButton>
           </div>
@@ -243,13 +264,13 @@ export default function AuthForm({ mode, onModeChange }: AuthFormProps) {
         <div className="text-xs text-gray-400 font-mono">
           <div className="text-[#00ff41] mb-2 flex items-center">
             <Terminal className="w-3 h-3 mr-1" />
-            REQUISITOS DEL SISTEMA:
+            SYSTEM REQUIREMENTS:
           </div>
           <div className="space-y-1">
-            <div>• Usuario: mínimo 3 caracteres</div>
-            <div>• Contraseña: mínimo 6 caracteres</div>
-            <div>• Sesión: validez de 7 días</div>
-            <div className="text-yellow-400 mt-2">• Admin por defecto: admin / admin123</div>
+            <div>• Username: minimum 3 characters</div>
+            <div>• Password: minimum 6 characters</div>
+            <div>• Session: valid for 7 days</div>
+            <div className="text-yellow-400 mt-2">• Default admin: admin / admin123</div>
           </div>
         </div>
       </GlowCard>
