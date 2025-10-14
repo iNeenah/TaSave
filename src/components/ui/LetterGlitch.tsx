@@ -219,7 +219,7 @@ const LetterGlitch = ({
       }
       window.removeEventListener('resize', handleResize);
     };
-  }, [glitchSpeed, smooth, glitchColors, characters]);
+  }, [glitchSpeed, smooth, glitchColors, characters, animate, resizeCanvas]);
 
   return (
     <div className="relative w-full h-full bg-black overflow-hidden">

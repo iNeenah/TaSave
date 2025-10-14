@@ -44,7 +44,7 @@ export default async function UploadPage() {
               </p>
               <div className="space-y-3">
                 <p className="text-sm text-gray-400">
-                  To upload machines, you need to be a <strong>Contributor</strong> or <strong>Administrator</strong>.
+                  To upload machines, you need to be a Contributor or Administrator.
                 </p>
                 <p className="text-sm text-gray-400">
                   Contact an administrator to upgrade your account.

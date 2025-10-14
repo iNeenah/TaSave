@@ -55,7 +55,7 @@ export default function DashboardClient({ machinesWithData, username, canUploadM
 
   // Filter and sort machines based on selected filters
   const filteredMachines = useMemo(() => {
-    let filtered = machinesWithData.filter((item) => {
+    const filtered = machinesWithData.filter((item) => {
       const machine = item.machine;
 
       // Search filter
@@ -430,7 +430,7 @@ export default function DashboardClient({ machinesWithData, username, canUploadM
                 </div>
                 <div className="flex">
                   <span className="text-[#00ff41] mr-2">$</span>
-                  <span>echo &quot;Keep exploring, hacker!&quot;</span>
+                  <span>echo &ldquo;Keep exploring, hacker!&rdquo;</span>
                 </div>
               </div>
             </TerminalWindow>

@@ -166,7 +166,7 @@ const LetterGlitchBackground = ({
       }
       window.removeEventListener('resize', handleResize);
     };
-  }, [intensity, settings.letterCount, settings.updateSpeed, settings.fontSize]);
+  }, [intensity, settings.letterCount, settings.updateSpeed, settings.fontSize, animate, resizeCanvas]);
 
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">

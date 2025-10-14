@@ -38,7 +38,7 @@ export async function getCurrentUserWithRole() {
   if (!user) return null;
   
   // Default to 'user' role if not set (for backward compatibility)
-  const role = (user as any).role || 'user';
+  const role = (user as typeof user & { role?: Role }).role || 'user';
   
   return {
     ...user,

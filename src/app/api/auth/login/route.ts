@@ -44,7 +44,7 @@ export async function POST(request: NextRequest) {
     await setAuthCookie(token); // HttpOnly cookie para seguridad
 
     // Rest operator: Excluir propiedades sensibles de la respuesta
-    const { password: _password, ...userWithoutPassword } = user;
+    const { password: _, ...userWithoutPassword } = user;
 
     return NextResponse.json({
       message: "Login successful",

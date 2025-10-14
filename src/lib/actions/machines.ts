@@ -203,7 +203,7 @@ export async function uploadMachine(formData: FormData) {
     const machineData = {
       name: name.trim(),
       description: description?.trim() || null,
-      difficulty: difficulty as any,
+      difficulty: difficulty as "very_easy" | "easy" | "medium" | "hard",
       downloadLink: downloadLink.trim(),
       image: image?.trim() || null,
       creationDate: creationDate || new Date().toISOString().split('T')[0],
