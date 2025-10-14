@@ -35,7 +35,7 @@ export default async function UploadPage() {
               <div className="text-red-400 text-6xl mb-4">🚫</div>
               <h1 className="text-2xl font-bold text-white mb-4">Access Denied</h1>
               <p className="text-gray-300 mb-4">
-                You don't have permission to upload machines.
+                You do not have permission to upload machines.
               </p>
               <p className="text-sm text-gray-400 mb-6">
                 Current role: <span className="text-yellow-400">{getRoleDisplayName(userWithRole?.role || 'user')}</span>

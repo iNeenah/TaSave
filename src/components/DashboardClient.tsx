@@ -179,7 +179,7 @@ export default function DashboardClient({ machinesWithData, username, canUploadM
                   )}
                   {searchTerm && (
                     <Badge variant="outline" className="text-xs">
-                      Search: "{searchTerm}"
+                      Search: {searchTerm}
                     </Badge>
                   )}
                   <HackerButton
@@ -430,7 +430,7 @@ export default function DashboardClient({ machinesWithData, username, canUploadM
                 </div>
                 <div className="flex">
                   <span className="text-[#00ff41] mr-2">$</span>
-                  <span>echo &quot;Keep exploring, hacker!&quot;</span>
+                  <span>echo Keep exploring, hacker!</span>
                 </div>
               </div>
             </TerminalWindow>
