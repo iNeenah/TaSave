@@ -1,11 +1,14 @@
 'use client'
 
 import React from "react"
+// FRAMER MOTION: Librería para animaciones declarativas en React
 import { motion } from "framer-motion"
 import { cn } from "@/lib/utils"
 import { ReactNode, useState } from "react"
+// CVA: Class Variance Authority para manejar variantes de clases CSS
 import { cva, type VariantProps } from "class-variance-authority"
 
+// DESIGN SYSTEM: CVA permite crear sistemas de componentes con variantes consistentes
 const hackerButtonVariants = cva(
     "relative inline-flex items-center justify-center rounded-md text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 terminal-text overflow-hidden",
     {
@@ -42,30 +45,35 @@ interface HackerButtonProps extends VariantProps<typeof hackerButtonVariants> {
     type?: "button" | "submit" | "reset"
 }
 
+// COMPOUND COMPONENT: Combina múltiples funcionalidades en un solo componente
 export default function HackerButton({
     className,
     variant,
     size,
     children,
-    glitchEffect = false,
+    glitchEffect = false, // DEFAULT PARAMETER: Valor por defecto si no se pasa
     onClick,
     disabled,
     type = "button"
 }: HackerButtonProps) {
+    // LOCAL STATE: Estado interno del componente para interacciones
     const [isHovered, setIsHovered] = useState(false)
 
     return (
+        // MOTION COMPONENT: Wrapper de Framer Motion para animaciones
         <motion.button
             className={cn(hackerButtonVariants({ variant, size }), className)}
+            // EVENT HANDLERS: Funciones que responden a eventos del usuario
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
             onClick={onClick}
             disabled={disabled}
             type={type}
+            // ANIMATION PROPS: Propiedades específicas de Framer Motion
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
         >
-            {/* Scanning line effect */}
+            {/* Efecto de línea de escaneo */}
             <motion.div
                 className="absolute inset-0 bg-gradient-to-r from-transparent via-[#00ff41]/30 to-transparent"
                 initial={{ x: "-100%" }}
@@ -73,7 +81,7 @@ export default function HackerButton({
                 transition={{ duration: 0.6, ease: "easeInOut" }}
             />
 
-            {/* Matrix rain effect for matrix variant */}
+            {/* Efecto lluvia de Matrix para variante matrix */}
             {variant === "matrix" && (
                 <div className="absolute inset-0 opacity-20">
                     {[...Array(5)].map((_, i) => (
@@ -95,7 +103,7 @@ export default function HackerButton({
                 </div>
             )}
 
-            {/* Glitch effect */}
+            {/* Efecto glitch con capas de colores */}
             {glitchEffect && isHovered && (
                 <>
                     <motion.span
@@ -121,7 +129,7 @@ export default function HackerButton({
                 </>
             )}
 
-            {/* Main content */}
+            {/* Contenido principal del botón */}
             <span className="relative z-10">{children}</span>
         </motion.button>
     )

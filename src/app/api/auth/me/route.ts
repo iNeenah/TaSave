@@ -1,10 +1,13 @@
 import { NextResponse } from "next/server";
 import { getCurrentUser } from "@/lib/auth";
 
+// GET endpoint: Obtener información del usuario autenticado
 export async function GET() {
   try {
+    // Middleware pattern: getCurrentUser verifica JWT y devuelve usuario o null
     const user = await getCurrentUser();
     
+    // Guard clause: Salida temprana si no hay usuario autenticado
     if (!user) {
       return NextResponse.json(
         { error: "Not authenticated" },
@@ -12,10 +15,9 @@ export async function GET() {
       );
     }
 
-    // No devolver la contraseña
+    // Data sanitization: Remover información sensible antes de enviar al cliente
     const { password, ...userWithoutPassword } = user;
-    // Evitar warning de variable no utilizada
-    void password;
+    void password; // void operator: Marcar variable como intencionalmente no usada
     
     return NextResponse.json(userWithoutPassword);
   } catch (error) {

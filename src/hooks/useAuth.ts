@@ -8,24 +8,32 @@ interface User {
   username: string;
 }
 
+// CUSTOM HOOK: Patrón de React para reutilizar lógica de estado entre componentes
+// Los hooks personalizados siempre empiezan con "use" y pueden usar otros hooks internamente
 export function useAuth() {
+  // useState: Hook que maneja estado local del componente, devuelve [valor, setter]
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  // useRouter: Hook de Next.js para navegación programática
   const router = useRouter();
 
+  // useEffect: Hook para efectos secundarios (side effects)
+  // Se ejecuta después del render, el array vacío [] significa que solo se ejecuta una vez
   useEffect(() => {
     checkAuthStatus();
-  }, []);
+  }, []); // Dependency array vacío = solo se ejecuta al montar el componente
 
   const checkAuthStatus = async () => {
     try {
       setIsLoading(true);
-      
-      // En Next.js, verificamos la autenticación haciendo una llamada al servidor
+
+      // Fetch API: Método moderno para hacer peticiones HTTP
+      // credentials: 'include' envía cookies automáticamente (necesario para JWT)
       const response = await fetch('/api/auth/me', {
         method: 'GET',
-        credentials: 'include', // Incluir cookies
+        credentials: 'include',
       });
 
       if (response.ok) {
@@ -45,8 +53,10 @@ export function useAuth() {
     }
   };
 
+  // Función async/await: Manejo moderno de operaciones asíncronas
   const login = async (username: string, password: string) => {
     try {
+      // POST request con JSON body para enviar credenciales
       const response = await fetch('/api/auth/login', {
         method: 'POST',
         headers: {
@@ -58,10 +68,11 @@ export function useAuth() {
 
       if (response.ok) {
         const data = await response.json();
+        // Actualizar múltiples estados relacionados
         setUser(data.user);
         setIsAuthenticated(true);
-        
-        // Usar Page Transition API si está disponible
+
+        // Progressive Enhancement: Usar nueva API si está disponible, fallback si no
         if ('startViewTransition' in document) {
           document.startViewTransition(() => {
             router.push('/dashboard');
@@ -69,16 +80,17 @@ export function useAuth() {
         } else {
           router.push('/dashboard');
         }
-        
+
         return { success: true };
       } else {
         const errorData = await response.json();
         return { success: false, error: errorData.message };
       }
     } catch (error) {
-      return { 
-        success: false, 
-        error: error instanceof Error ? error.message : 'Login failed' 
+      // Type narrowing: Verificar tipo antes de acceder a propiedades
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : 'Login failed'
       };
     }
   };
@@ -98,7 +110,7 @@ export function useAuth() {
         const data = await response.json();
         setUser(data.user);
         setIsAuthenticated(true);
-        
+
         // Usar Page Transition API si está disponible
         if ('startViewTransition' in document) {
           document.startViewTransition(() => {
@@ -107,16 +119,16 @@ export function useAuth() {
         } else {
           router.push('/dashboard');
         }
-        
+
         return { success: true };
       } else {
         const errorData = await response.json();
         return { success: false, error: errorData.message };
       }
     } catch (error) {
-      return { 
-        success: false, 
-        error: error instanceof Error ? error.message : 'Registration failed' 
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : 'Registration failed'
       };
     }
   };
@@ -127,10 +139,10 @@ export function useAuth() {
         method: 'POST',
         credentials: 'include',
       });
-      
+
       setUser(null);
       setIsAuthenticated(false);
-      
+
       // Usar Page Transition API si está disponible
       if ('startViewTransition' in document) {
         document.startViewTransition(() => {
@@ -148,6 +160,8 @@ export function useAuth() {
     }
   };
 
+  // Return object: El hook devuelve un objeto con estado y funciones
+  // Esto permite que los componentes accedan solo a lo que necesitan
   return {
     user,
     isLoading,

@@ -4,6 +4,7 @@ import { useEffect, useState, useRef } from "react";
 import { gsap } from "gsap";
 import { TextPlugin } from "gsap/TextPlugin";
 
+// Pantalla de carga con animaciones estilo terminal
 export default function Preloader() {
   const [isLoading, setIsLoading] = useState(true);
   const preloaderRef = useRef<HTMLDivElement>(null);
@@ -14,14 +15,14 @@ export default function Preloader() {
     const preloader = preloaderRef.current;
     if (!preloader) return;
 
-    // Create timeline for preloader animation
+    // Timeline de animación del preloader
     const tl = gsap.timeline({
       onComplete: () => {
         setIsLoading(false);
       }
     });
 
-    // Animate the preloader
+    // Secuencia de animaciones
     tl.to(".preloader-title", {
       duration: 0.5,
       opacity: 1,

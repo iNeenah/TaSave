@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Machine } from "@/db/schema";
 import FavoriteButton from "./FavoriteButton";
 import TodoButton from "./TodoButton";
+import MachineBadges from "./ui/MachineBadges";
 
 interface MachineCardProps {
   machine: Machine;
@@ -29,11 +30,18 @@ export default function MachineCard({
     <div className="bg-gray-900 border border-gray-700 rounded-lg shadow-md overflow-hidden hover:shadow-lg hover:border-green-500 transition-all duration-300">
       <div className="p-6">
         <div className="flex items-start justify-between mb-2">
-          <h3 className="text-lg font-semibold text-green-500 line-clamp-2">
-            {machine.name}
-          </h3>
+          <div className="flex-1 mr-2">
+            <h3 className="text-lg font-semibold text-green-500 line-clamp-2 mb-2">
+              {machine.name}
+            </h3>
+            <MachineBadges 
+              createdAt={machine.createdAt} 
+              averageRating={averageRating || 0} 
+              reviewCount={userReviewCount || 0} 
+            />
+          </div>
           <span
-            className={`px-2 py-1 text-xs font-medium rounded-full bg-gray-800 text-green-400 border border-gray-600`}
+            className={`px-2 py-1 text-xs font-medium rounded-full bg-gray-800 text-green-400 border border-gray-600 whitespace-nowrap`}
           >
             {difficultyLabels[machine.difficulty]}
           </span>

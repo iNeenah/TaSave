@@ -8,6 +8,13 @@
       "when": 1758432886482,
       "tag": "0000_orange_chronomancer",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1760411770004,
+      "tag": "0001_woozy_chameleon",
+      "breakpoints": true
     }
   ]
 }

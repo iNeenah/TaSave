@@ -10,21 +10,25 @@ interface AnimatedPageProps {
   enablePageTransition?: boolean;
 }
 
+// HIGHER-ORDER COMPONENT: Componente que envuelve otros para agregar funcionalidad
 export default function AnimatedPage({ children, enablePageTransition = true }: AnimatedPageProps) {
+  // useRef: Hook para referencias directas a elementos DOM
   const pageRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    // SSR GUARD: Evitar ejecución en el servidor
     if (typeof window === "undefined") return;
     
     gsap.registerPlugin(ScrollTrigger);
 
-    // Setup Page Transition API if available and enabled
+    // PROGRESSIVE ENHANCEMENT: Usar nueva API si está disponible
     if (enablePageTransition && 'startViewTransition' in document) {
       setupPageTransitions();
     }
 
+    // GSAP CONTEXT: Scope para animaciones, facilita cleanup
     const ctx = gsap.context(() => {
-      // Page entrance animation
+      // Animación de entrada de la página
       gsap.fromTo(
         pageRef.current,
         { opacity: 0, y: 20 },
@@ -36,7 +40,7 @@ export default function AnimatedPage({ children, enablePageTransition = true }: 
         }
       );
 
-      // Hero section animations (excluding title which has its own scramble animation)
+      // Animaciones de la sección hero
       gsap.fromTo(
         ".hero-subtitle",
         { opacity: 0, y: 30 },
@@ -73,7 +77,7 @@ export default function AnimatedPage({ children, enablePageTransition = true }: 
         }
       );
 
-      // Auth form animations
+      // Animaciones de formularios de autenticación
       gsap.fromTo(
         ".auth-form",
         { opacity: 0, y: 30, scale: 0.95 },
@@ -87,7 +91,7 @@ export default function AnimatedPage({ children, enablePageTransition = true }: 
         }
       );
 
-      // Features section scroll reveal
+      // Animaciones activadas por scroll
       createScrollReveal(".features-title", {
         start: "top 85%",
       });
@@ -141,8 +145,9 @@ export default function AnimatedPage({ children, enablePageTransition = true }: 
 
     }, pageRef);
 
+    // CLEANUP: Revertir animaciones al desmontar el componente
     return () => ctx.revert();
-  }, [enablePageTransition]);
+  }, [enablePageTransition]); // DEPENDENCY ARRAY: Re-ejecutar si cambia enablePageTransition
 
   const setupPageTransitions = () => {
     // Add CSS for page transitions

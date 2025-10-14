@@ -9,6 +9,7 @@ interface MatrixRainProps {
   color?: string
 }
 
+// Efecto de lluvia de Matrix con caracteres cayendo
 export default function MatrixRain({ 
   className = '', 
   intensity = 'medium',
@@ -35,11 +36,11 @@ export default function MatrixRain({
     resizeCanvas()
     window.addEventListener('resize', resizeCanvas)
 
-    // Matrix characters
+    // Caracteres que caen en el efecto Matrix
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()_+-=[]{}|;:,.<>?'
     const charArray = chars.split('')
 
-    // Drops configuration based on intensity
+    // Configuración de intensidad del efecto
     const intensityConfig = {
       low: { dropCount: 50, speed: 0.5 },
       medium: { dropCount: 100, speed: 1 },

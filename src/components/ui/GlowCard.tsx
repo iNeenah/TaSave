@@ -12,6 +12,7 @@ interface GlowCardProps {
   animated?: boolean
 }
 
+// Tarjeta con efecto de brillo personalizable
 export default function GlowCard({ 
   children, 
   className, 
@@ -49,10 +50,10 @@ export default function GlowCard({
       style={glowStyle}
       {...animationProps}
     >
-      {/* Animated border glow */}
+      {/* Brillo animado del borde */}
       <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-transparent via-[#00ff41]/20 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-500" />
       
-      {/* Content */}
+      {/* Contenido de la tarjeta */}
       <div className="relative z-10">
         {children}
       </div>

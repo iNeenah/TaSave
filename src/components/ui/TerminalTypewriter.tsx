@@ -5,6 +5,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { TextPlugin } from "gsap/TextPlugin";
 
+// Terminal que simula un ataque hacker con efecto typewriter
 export default function TerminalTypewriter() {
   const terminalRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
@@ -27,7 +28,7 @@ export default function TerminalTypewriter() {
 
     let currentText = "";
 
-    // Función para agregar línea con efecto typewriter y velocidades variables
+    // Función que simula escritura de comandos con velocidad variable
     const addTypingLine = (text: string, pauseAfter: number, speed: number = 0.05, isWarning: boolean = false) => {
       const newText = currentText + text + "\n";
 
@@ -58,19 +59,19 @@ export default function TerminalTypewriter() {
       currentText = newText;
     };
 
-    // FASE 1: Ejecución del Exploit
+    // Secuencia de simulación de ataque
     addTypingLine("> python3 db_extractor.py --target sv_tasave.local", 0.5, 0.04);
     addTypingLine("> Searching for vulnerabilities...", 1.0, 0.05);
     addTypingLine("> SQL Injection vulnerability found in 'login' portal.", 0.5, 0.05);
-    addTypingLine("> Bypassing authentication... Access Granted.", 1.5, 0.06); // Más lento para dramatismo
+    addTypingLine("> Bypassing authentication... Access Granted.", 1.5, 0.06);
 
-    // FASE 2: Exfiltración de Datos (Mensaje Personalizado)
-    addTypingLine("> WARNING: Database compromised. Extracting table 'users'...", 0.5, 0.07, true); // Más lento para dramatismo + warning
+    // Fase de extracción de datos
+    addTypingLine("> WARNING: Database compromised. Extracting table 'users'...", 0.5, 0.07, true);
     addTypingLine("> [####################] 100% Complete.", 1.0, 0.04);
     addTypingLine("> Data extraction authorized by: Mauricio Duarte", 0.5, 0.05);
     addTypingLine("> Origin IP trace: Posadas, Misiones.", 2.0, 0.05);
 
-    // FASE 3: Limpieza y Reinicio del Bucle
+    // Limpieza de rastros
     addTypingLine("> Covering tracks... deleting logs...", 1.0, 0.05);
 
     // Agregar cursor parpadeante durante la secuencia

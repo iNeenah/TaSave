@@ -12,6 +12,7 @@ interface GlitchTextProps {
   glitchChars?: string
 }
 
+// Texto con efecto glitch que simula interferencia digital
 export default function GlitchText({ 
   children, 
   className,
@@ -30,6 +31,7 @@ export default function GlitchText({
 
   const config = intensityConfig[intensity]
 
+  // Función que genera el efecto glitch reemplazando caracteres aleatoriamente
   const glitchEffect = useCallback(() => {
     if (isGlitching) return
     
@@ -86,10 +88,10 @@ export default function GlitchText({
       onClick={trigger === 'click' ? handleInteraction : undefined}
       whileHover={trigger === 'hover' ? { scale: 1.05 } : undefined}
     >
-      {/* Main text */}
+      {/* Texto principal */}
       <span className="relative z-10">{glitchedText}</span>
       
-      {/* Glitch layers */}
+      {/* Capas de efecto glitch con colores RGB */}
       {isGlitching && (
         <>
           <motion.span
@@ -115,7 +117,7 @@ export default function GlitchText({
         </>
       )}
       
-      {/* Scan lines */}
+      {/* Líneas de escaneo */}
       {isGlitching && (
         <motion.div
           className="absolute inset-0 bg-gradient-to-b from-transparent via-[#00ff41]/20 to-transparent"

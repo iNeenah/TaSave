@@ -17,11 +17,18 @@ export const difficultyEnum = pgEnum("difficulty", [
   "hard",
 ]);
 
+export const roleEnum = pgEnum("role", [
+  "user",
+  "contributor", 
+  "admin",
+]);
+
 // Tables
 export const users = pgTable("users", {
   id: serial("id").primaryKey(),
   username: varchar("username", { length: 50 }).notNull().unique(),
   password: varchar("password", { length: 255 }).notNull(),
+  role: roleEnum("role").default("user").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
@@ -135,3 +142,4 @@ export type NewFavorite = typeof favorites.$inferInsert;
 export type Todo = typeof todos.$inferSelect;
 export type NewTodo = typeof todos.$inferInsert;
 export type Difficulty = (typeof difficultyEnum.enumValues)[number];
+export type Role = (typeof roleEnum.enumValues)[number];

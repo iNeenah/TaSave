@@ -1,13 +1,14 @@
+// GSAP: GreenSock Animation Platform - librería profesional para animaciones web
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { TextPlugin } from "gsap/TextPlugin";
 
-// Register GSAP plugins
+// SSR SAFETY: Verificar que estamos en el cliente antes de registrar plugins
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger, TextPlugin);
 }
 
-// Animation configurations
+// CONFIGURATION OBJECT: Centralizar configuraciones para consistencia
 export const ANIMATION_CONFIG = {
   duration: {
     fast: 0.3,
@@ -25,16 +26,17 @@ export const ANIMATION_CONFIG = {
   },
 };
 
-// Standard reveal animation
+// FACTORY FUNCTION: Función que crea y retorna animaciones configurables
 export const createRevealAnimation = (
-  element: string | Element,
+  element: string | Element, // UNION TYPE: Acepta selector CSS o elemento DOM
   options: {
     delay?: number;
     duration?: number;
     y?: number;
     stagger?: number;
-  } = {}
+  } = {} // DEFAULT PARAMETER: Objeto vacío si no se pasan opciones
 ) => {
+  // DESTRUCTURING WITH DEFAULTS: Extraer valores con fallbacks
   const {
     delay = 0,
     duration = ANIMATION_CONFIG.duration.normal,
@@ -42,24 +44,27 @@ export const createRevealAnimation = (
     stagger = 0,
   } = options;
 
+  // GSAP TWEEN: fromTo define estados inicial y final de la animación
   return gsap.fromTo(
     element,
     {
+      // INITIAL STATE: Propiedades CSS del estado inicial
       opacity: 0,
       y: y,
     },
     {
+      // FINAL STATE: Propiedades CSS del estado final
       opacity: 1,
       y: 0,
       duration,
       delay,
-      stagger,
+      stagger, // STAGGER: Retraso entre elementos múltiples
       ease: ANIMATION_CONFIG.ease.smooth,
     }
   );
 };
 
-// Scroll-triggered reveal
+// Animación activada por scroll
 export const createScrollReveal = (
   element: string | Element,
   options: {
@@ -100,11 +105,13 @@ export const createScrollReveal = (
   );
 };
 
-// Hover glow effect
+// HIGHER-ORDER FUNCTION: Función que retorna funciones de cleanup
 export const createHoverGlow = (element: string | Element) => {
+  // TYPE GUARD: Verificar tipo y convertir selector a elemento
   const el = typeof element === "string" ? document.querySelector(element) : element;
-  if (!el) return;
+  if (!el) return; // EARLY RETURN: Salir si no se encuentra el elemento
 
+  // CLOSURE: Función que mantiene acceso al scope externo
   const handleMouseEnter = () => {
     gsap.to(el, {
       boxShadow: "0 0 20px rgba(0, 255, 65, 0.3), 0 0 40px rgba(0, 255, 65, 0.1)",
@@ -123,16 +130,18 @@ export const createHoverGlow = (element: string | Element) => {
     });
   };
 
+  // EVENT LISTENERS: Registrar manejadores de eventos
   el.addEventListener("mouseenter", handleMouseEnter);
   el.addEventListener("mouseleave", handleMouseLeave);
 
+  // CLEANUP FUNCTION: Retornar función para remover listeners (evitar memory leaks)
   return () => {
     el.removeEventListener("mouseenter", handleMouseEnter);
     el.removeEventListener("mouseleave", handleMouseLeave);
   };
 };
 
-// Scramble text animation (simulated)
+// Animación de texto scramble (efecto hacker)
 export const createScrambleAnimation = (
   element: string | Element,
   finalText: string,
@@ -178,7 +187,7 @@ export const createScrambleAnimation = (
   return tl;
 };
 
-// Typewriter animation for terminal
+// Animación de máquina de escribir para terminal
 export const createTypewriterAnimation = (
   element: string | Element,
   lines: string[],

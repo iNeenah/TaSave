@@ -7,6 +7,8 @@ const connectionString =
   process.env.DATABASE_URL ||
   "postgresql://postgres:postgres@localhost:5432/dockerlabs";
 
+
+
 // Create the connection
 const client = postgres(connectionString);
 

@@ -16,8 +16,9 @@ import Preloader from "@/components/Preloader";
 import SmoothScrolling from "@/components/SmoothScrolling";
 import { Shield, Terminal, Users, Zap, Database, Code } from "lucide-react";
 
-
+// Página principal con tema cyberpunk y efectos visuales
 export default async function HomePage() {
+  // Verificar si el usuario está autenticado
   const user = await getCurrentUser();
 
   return (
@@ -27,7 +28,7 @@ export default async function HomePage() {
       <MatrixRain intensity="low" />
       <AnimatedPage>
         <div className="bg-black min-h-screen text-green-500 relative z-10">
-          {/* Hero Section */}
+          {/* Sección principal con video de fondo */}
           <section className="py-20 lg:py-32 relative overflow-hidden">
             {/* Background Video */}
             <video
@@ -93,7 +94,7 @@ export default async function HomePage() {
             </Container>
           </section>
 
-          {/* Features Section */}
+          {/* Sección de características del sistema */}
           <section className="py-20 bg-gray-950/50 relative overflow-hidden backdrop-blur-sm">
             <Container className="relative z-10">
               <div className="text-center mb-16">
@@ -159,7 +160,7 @@ export default async function HomePage() {
             </Container>
           </section>
 
-          {/* Terminal Section */}
+          {/* Sección de terminal simulada */}
           <section className="py-20 relative overflow-hidden">
             <Container className="relative z-10">
               <div className="max-w-4xl mx-auto">
