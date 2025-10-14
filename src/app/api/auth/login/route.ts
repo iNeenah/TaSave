@@ -44,6 +44,7 @@ export async function POST(request: NextRequest) {
     await setAuthCookie(token); // HttpOnly cookie para seguridad
 
     // Rest operator: Excluir propiedades sensibles de la respuesta
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { password: _, ...userWithoutPassword } = user;
 
     return NextResponse.json({

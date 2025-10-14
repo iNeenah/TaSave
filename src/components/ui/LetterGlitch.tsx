@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useCallback } from 'react';
 
 interface LetterGlitchProps {
   glitchColors?: string[];
@@ -93,7 +93,7 @@ const LetterGlitch = ({
     }));
   };
 
-  const resizeCanvas = () => {
+  const resizeCanvas = useCallback(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const parent = canvas.parentElement;
@@ -115,7 +115,7 @@ const LetterGlitch = ({
     const { columns, rows } = calculateGrid(rect.width, rect.height);
     initializeLetters(columns, rows);
     drawLetters();
-  };
+  }, []);
 
   const drawLetters = () => {
     if (!context.current || letters.current.length === 0) return;
@@ -175,7 +175,7 @@ const LetterGlitch = ({
     }
   };
 
-  const animate = () => {
+  const animate = useCallback(() => {
     const now = Date.now();
     if (now - lastGlitchTime.current >= glitchSpeed) {
       updateLetters();
@@ -188,7 +188,7 @@ const LetterGlitch = ({
     }
 
     animationRef.current = requestAnimationFrame(animate);
-  };
+  }, [glitchSpeed, smooth]);
 
   useEffect(() => {
     const canvas = canvasRef.current;

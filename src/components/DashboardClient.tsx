@@ -430,7 +430,7 @@ export default function DashboardClient({ machinesWithData, username, canUploadM
                 </div>
                 <div className="flex">
                   <span className="text-[#00ff41] mr-2">$</span>
-                  <span>echo &ldquo;Keep exploring, hacker!&rdquo;</span>
+                  <span>echo &quot;Keep exploring, hacker!&quot;</span>
                 </div>
               </div>
             </TerminalWindow>

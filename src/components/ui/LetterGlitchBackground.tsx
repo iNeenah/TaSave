@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useCallback } from 'react';
 
 interface LetterGlitchBackgroundProps {
   intensity?: 'low' | 'medium' | 'high';
@@ -59,7 +59,7 @@ const LetterGlitchBackground = ({
     }));
   };
 
-  const resizeCanvas = () => {
+  const resizeCanvas = useCallback(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const parent = canvas.parentElement;
@@ -81,7 +81,7 @@ const LetterGlitchBackground = ({
     }
 
     initializeLetters(rect.width, rect.height);
-  };
+  }, [settings.fontSize]);
 
   const drawLetters = () => {
     if (!context.current || letters.current.length === 0) return;
@@ -131,11 +131,11 @@ const LetterGlitchBackground = ({
     lastUpdateTime.current = now;
   };
 
-  const animate = () => {
+  const animate = useCallback(() => {
     updateLetters();
     drawLetters();
     animationRef.current = requestAnimationFrame(animate);
-  };
+  }, []);
 
   useEffect(() => {
     const canvas = canvasRef.current;
